@@ -37,6 +37,11 @@
                 }
             }
 
+            function RegistrarPersona()
+            {
+                window.location.href = "<%=request.getContextPath()%>/Vista/FrmRegistrarUsuario.jsp";
+            }
+
             function Salir()
             {
                 window.location.href = "<%=request.getContextPath()%>/index.jsp";
@@ -78,6 +83,7 @@
                 <input type="button" value="Aceptar" onclick="Aceptar()">
 
                 <input type="button" value="Salir" onclick="Salir()">
+                <input type="button" value="Registrar Persona" onclick="RegistrarPersona()">
             </center>
             </td>
             </tr>
