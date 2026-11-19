@@ -1,119 +1,69 @@
-<%@page import="Modelo.Usuario" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
-        <script>
-            function  Entrar()
-            {
-                document.form.action = "<%=request.getContextPath()%>/UsuarioControlador";
-                document.form.method = "POST";
-                document.form.op.value = "1";
-                document.form.submit();
-            }
-            function Aceptar()
-            {
-                var usuario = document.form.txtusuario.value;
-                var clave = document.form.txtclave.value;
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de sesión</title>
+    <script>
+        function Aceptar() {
+            var usuario = document.form.txtusuario.value.trim();
+            var clave = document.form.txtclave.value;
 
-                if (usuario.length == 0)
-                {
-                    alert("Ingrese el usuario por favor !!!");
-                    document.form.txtusuario.focus();
-                    return;
-                } else if (clave.length == 0)
-                {
-                    alert("Ingrese la clave por favor !!!");
-                    document.form.txtclave.focus();
-                    return;
-                } else
-                {
-                    document.form.action = "<%=request.getContextPath()%>/UsuarioControlador";
-                    document.form.method = "POST";
-                    document.form.op.value = "4";
-                    document.form.submit();
-                }
+            if (usuario.length === 0) {
+                alert("Ingrese el usuario por favor.");
+                document.form.txtusuario.focus();
+                return;
             }
 
-            function RegistrarPersona()
-            {
-                window.location.href = "<%=request.getContextPath()%>/Vista/FrmRegistrarUsuario.jsp";
+            if (clave.length === 0) {
+                alert("Ingrese la clave por favor.");
+                document.form.txtclave.focus();
+                return;
             }
 
-            function Salir()
-            {
-                window.location.href = "<%=request.getContextPath()%>/index.jsp";
-            }
-        </script> 
-    </head>
+            document.form.action = "<%=request.getContextPath()%>/UsuarioControlador";
+            document.form.method = "POST";
+            document.form.op.value = "4";
+            document.form.submit();
+        }
 
-
+        function RegistrarPersona() {
+            document.form.action = "<%=request.getContextPath()%>/UsuarioControlador";
+            document.form.method = "POST";
+            document.form.op.value = "1";
+            document.form.submit();
+        }
+    </script>
 </head>
-
 <body>
-<center>
+    <main>
+        <h2>INICIO DE SESIÓN</h2>
 
-    <h2>INICIO DE SESION</h2>
+        <form name="form" method="post">
+            <input type="hidden" name="op">
 
-    <form name="form">
+            <table border="1">
+                <tr>
+                    <td><label for="txtusuario">Usuario:</label></td>
+                    <td><input type="text" id="txtusuario" name="txtusuario" autocomplete="username"></td>
+                </tr>
+                <tr>
+                    <td><label for="txtclave">Clave:</label></td>
+                    <td><input type="password" id="txtclave" name="txtclave" autocomplete="current-password"></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="button" value="Aceptar" onclick="Aceptar()">
+                        <input type="button" value="Registrar Persona" onclick="RegistrarPersona()">
+                    </td>
+                </tr>
+            </table>
 
-        <input type="hidden" name="op">
-
-        <table border="10">
-
-            <tr>
-                <td>Usuario:</td>
-                <td>
-                    <input type="text" name="txtusuario">
-                </td>
-            </tr>
-
-            <tr>
-                <td>Clave:</td>
-                <td>
-                    <input type="password" name="txtclave">
-                </td>
-            </tr>
-
-            <tr>
-                <td colspan="2">
-            <center>
-                <input type="button" value="Aceptar" onclick="Aceptar()">
-
-                <input type="button" value="Salir" onclick="Salir()">
-                <input type="button" value="Registrar Persona" onclick="RegistrarPersona()">
-            </center>
-            </td>
-            </tr>
-
-        </table>
-
-        <%
-            if(request.getAttribute("error") != null)
-            {
-        %>
-
-        <h4 style="color:red;">
-            <%=request.getAttribute("error")%>
-        </h4>
-
-        <%
-            }
-        %>
-
-    </form>
-
-</center>
-</body>
-</html>
-```      
-</center>  
-
-
-
-
-
+            <% if (request.getAttribute("error") != null) { %>
+                <p style="color: red;"><%= request.getAttribute("error") %></p>
+            <% } %>
+        </form>
+    </main>
 </body>
 </html>
